@@ -1,0 +1,109 @@
+<html ng-app="themeApp">
+<head>
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+	<script src="scripts/bootstrap-colorpicker-module.js"></script>
+	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="styles/colorpicker.css" />
+	<script src="scripts/color.min.js"></script>	
+	<script type="text/javascript">
+
+      //<add key="string" value="-1.5"/>
+      //<add key="number" value="-1.25"/>
+      //<add key="preprocessor" value="1.5"/>    
+
+		var themeData = function(main, foreground, background, contrast){
+			//these are arbitrary numbers in my (undocumented) code from ~6 years ago -- i do not remember why they are here but
+			//for first pass i'm going to keep the math the same then figure out what is going on then make it less magic
+			//it may be doing something to figure out the color triad but i don't think so...
+			var stringMultiplyer = -1.5; //no clue
+			var numberMultiplyer = -1.25; //again no clue
+			var preprocessorMultiplyer = 1.5; //no clue
+
+			//figure out if this is a dark or light background and set shade multiplyer
+			//this multiplyer will be used against the colors to determine if you should rotate in a postive or negative direction
+			var shadeMultiplyer =  Color(background).light() ? 1 : -1; 
+			//set the initial things
+			this.main = main; 
+			this.foreground = foreground; 
+			this.background = background; 
+			this.contrast = contrast; 
+
+
+
+			this.update = function(){
+				that = this; 
+				//do the math stuff to get the rest of them						
+				that.color1 = Color(that.main).rotate(contrast / stringMultiplyer).hexString(); //magic
+				that.color2 = Color(that.main).rotate(contrast / numberMultiplyer).hexString(); //magic
+				that.color3 = that.main; //randomly this one is the same color as the main color in the original code.
+				that.color4 = foreground; 
+				that.color5 = Color(that.main).rotate(contrast / stringMultiplyer).rotate(180).hexString(); 
+				that.color6 = Color(that.color5).lighten(.20 * shadeMultiplyer).hexString();
+				that.color7 = that.foreground; 
+				that.color8 = that.background; 
+				that.color9 = Color(that.main).rotate(contrast / preprocessorMultiplyer).hexString(); 
+
+				that.comment = Color(that.foreground).rotate(shadeMultiplyer * 30).hexString(); 
+				that.error =  Color("#F00").lighten(.40); 
+			}
+
+			this.update();
+		}
+
+		themeData.prototype.main= null; 
+		themeData.prototype.foreground = null; 
+		themeData.prototype.background = null; 
+		themeData.prototype.comment = null;
+		themeData.prototype.error = null;
+		//was string
+		themeData.prototype.color1 = null;
+		//was number
+		themeData.prototype.color2 = null;
+		//was keyword
+		themeData.prototype.color3 = null;
+		//was identifier
+		themeData.prototype.color4 = null;
+		//was user defined
+		themeData.prototype.color5 = null;
+		//was user defined 2
+		themeData.prototype.color6 = null;
+		//was operator
+		themeData.prototype.color7 = null;
+		//was margin
+		themeData.prototype.color8 = null;
+		//was preprocessor 
+		themeData.prototype.color9 = null;
+		//amount of max rotation
+		themeData.prototype.contrast = null; 
+
+
+		var themeApp = angular.module('themeApp', ['colorpicker.module']);
+
+		themeApp.controller('themeController', ['$scope', function($scope){
+			$scope.themeData = new themeData("#2FCEFE", "#CFCFCF", "#383838", 110);
+		}]);
+	</script>
+</head>
+<body>
+	<!-- this whole thing is a mess but mostly in the original -- clean it up at some point in the near future -->
+	<div ng-controller="themeController">
+		<div class="left">
+			<input colorpicker type="text" ng-model="themeData.main" ng-change="themeData.update()"/><br />
+			<input colorpicker type="text" ng-model="themeData.background" ng-change="themeData.update()" /><br />
+			<input colorpicker type="text" ng-model="themeData.foreground" ng-change="themeData.update()" /><br />
+		</div>
+        <div id="recolor" class="code" style="background-color: {{themeData.background}}; color: {{themeData.foreground}}">
+            <span class="preprocessor" style="color: {{themeData.color9}}">#region "preprocessor"</span><br />
+            <span class="comment" style="color: {{themeData.comment}}">//this is a comment</span><br />
+            <span class="keyword" style="color: {{themeData.color3}}">public static string</span> <span class="identifier" style="color: {{themeData.color4}}">ToHexString(</span><span class="keyword" style="color: {{themeData.color3}}">this</span> <span class="usertype2" style="color: {{themeData.color6}}">Color</span><span class="identifier" style="color: {{themeData.color4}}"> c)</span><br />
+            <span class="identifier" style="color: {{themeData.color4}}">{</span><br />
+            &nbsp;&nbsp;&nbsp;<span class="keyword" style="color: {{themeData.color3}}">string</span> <span class="identifier" style="color: {{themeData.color4}}">hex = </span><span class="string" style="color: {{themeData.color1}}">&quot;00000000&quot;</span><span class="identifier" style="color: {{themeData.color4}}">;</span><br />
+            &nbsp;&nbsp;&nbsp;<span class="identifier" style="color: {{themeData.color4}}">hex += </span><span class="usertype" style="color: {{themeData.color5}}">ColorTranslator</span><span class="identifier" style="color: {{themeData.color4}}">.ToWin32(c).ToString(</span><span class="string" style="color: {{themeData.color1}}">&quot;X&quot;</span><span class="identifier" style="color: {{themeData.color4}}">);</span><br />
+            &nbsp;&nbsp;&nbsp;<span class="keyword" style="color: {{themeData.color3}}">return</span> <span class="identifier" style="color: {{themeData.color4}}">hex.Substring(hex.Length - </span><span class="number" style="color: {{themeData.color2}}">8</span><span class="identifier" style="color: {{themeData.color4}}">,</span> <span class="number" style="color: {{themeData.color2}}">8</span><span class="identifier" style="color: {{themeData.color4}}">);</span><br />
+            <span class="identifier" style="color: {{themeData.color4}}">}</span><br />
+            <span class="preprocessor" style="color: {{themeData.color9}}">#endregion</span><br />
+	    </div>
+	</div>
+</body>
+</html>
