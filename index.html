@@ -1,12 +1,24 @@
 <html ng-app="themeApp">
 <head>
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/jquery-ui.js"></script>	
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
 	<script src="scripts/bootstrap-colorpicker-module.js"></script>
+	<script src="scripts/slider.js"></script>
 	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="styles/colorpicker.css" />
+	<link rel="stylesheet" href="styles/jqueryui.slider.css" />
 	<style type="text/css">
 		body{ padding:20px; }
+
+		.ui-slider{
+			background-color:#EDEDED;
+			height:2px;
+		}
+		.ui-slider-handle{
+			background-color:#444;
+			margin-top:-4px;
+		}
 	</style>
 	<script src="scripts/color.min.js"></script>	
 	<script type="text/javascript">
@@ -23,29 +35,29 @@
 			var numberMultiplyer = -1.25; //again no clue
 			var preprocessorMultiplyer = 1.5; //no clue
 
-			//figure out if this is a dark or light background and set shade multiplyer
-			//this multiplyer will be used against the colors to determine if you should rotate in a postive or negative direction
-			var shadeMultiplyer =  Color(background).light() ? 1 : -1; 
 			//set the initial things
 			this.main = main; 
 			this.foreground = foreground; 
 			this.background = background; 
 			this.contrast = contrast; 
 
-
-
 			this.update = function(){
 				that = this; 
+
+				//figure out if this is a dark or light background and set shade multiplyer
+				//this multiplyer will be used against the colors to determine if you should rotate in a postive or negative direction
+				var shadeMultiplyer =  Color(that.background).light() ? 1 : -1; 
+
 				//do the math stuff to get the rest of them						
-				that.color1 = Color(that.main).rotate(contrast / stringMultiplyer).hexString(); //magic
-				that.color2 = Color(that.main).rotate(contrast / numberMultiplyer).hexString(); //magic
+				that.color1 = Color(that.main).rotate(that.contrast / stringMultiplyer).hexString(); //magic
+				that.color2 = Color(that.main).rotate(that.contrast / numberMultiplyer).hexString(); //magic
 				that.color3 = that.main; //randomly this one is the same color as the main color in the original code.
 				that.color4 = that.foreground; 
-				that.color5 = Color(that.main).rotate(contrast / stringMultiplyer).rotate(180).hexString(); 
+				that.color5 = Color(that.main).rotate(that.contrast/(-1 * shadeMultiplyer)).hexString(); 
 				that.color6 = Color(that.color5).lighten(.20 * shadeMultiplyer).hexString();
 				that.color7 = that.foreground; 
 				that.color8 = that.background; 
-				that.color9 = Color(that.main).rotate(contrast / preprocessorMultiplyer).hexString(); 
+				that.color9 = Color(that.main).rotate(that.contrast / preprocessorMultiplyer).hexString(); 
 
 				that.comment = Color(that.foreground).rotate(shadeMultiplyer * 30).hexString(); 
 				that.error =  Color("#F00").lighten(.40); 
@@ -81,10 +93,15 @@
 		themeData.prototype.contrast = null; 
 
 
-		var themeApp = angular.module('themeApp', ['colorpicker.module']);
+		var themeApp = angular.module('themeApp', ['ui.slider','colorpicker.module']);
 
 		themeApp.controller('themeController', ['$scope', function($scope){
 			$scope.themeData = new themeData("#2FCEFE", "#CFCFCF", "#383838", 110);
+
+		   $scope.$watch('themeData.contrast', function() {
+			$scope.themeData.update();
+		   });
+
 		}]);
 	</script>
 </head>
@@ -121,6 +138,15 @@
 							<input name="foreground" colorpicker class="form-control" type="text" ng-model="themeData.foreground" ng-change="themeData.update()" />
 						</div>
 					</div>
+				</div>
+				<div class="form-group">
+					<label for="contrast">Contrast:</label>
+					<div class="row">
+						<div class="col-md-12">
+							<div><div ui-slider class="contrast-slider" min="0" max="180" ng-model="themeData.contrast"></div></div>
+						</div>
+					</div>
+					{{themeData.contrast}}
 				</div>
 			</div>
 			<div class="col-sm-6">
