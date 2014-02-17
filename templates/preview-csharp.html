@@ -1,0 +1,12 @@
+				<strong>Preview:</strong>
+		        <div style="background-color: {{themeData.background}}; color: {{themeData.foreground}}; padding:10px;">
+		            <span class="preprocessor" style="color: {{themeData.color9}}">#region "preprocessor"</span><br />
+		            <span class="comment" style="color: {{themeData.comment}}">//this is a comment</span><br />
+		            <span class="keyword" style="color: {{themeData.color3}}">public static string</span> <span class="identifier" style="color: {{themeData.color4}}">ToHexString(</span><span class="keyword" style="color: {{themeData.color3}}">this</span> <span class="usertype2" style="color: {{themeData.color6}}">Color</span><span class="identifier" style="color: {{themeData.color4}}"> c)</span><br />
+		            <span class="identifier" style="color: {{themeData.color4}}">{</span><br />
+		            &nbsp;&nbsp;&nbsp;<span class="keyword" style="color: {{themeData.color3}}">string</span> <span class="identifier" style="color: {{themeData.color4}}">hex = </span><span class="string" style="color: {{themeData.color1}}">&quot;00000000&quot;</span><span class="identifier" style="color: {{themeData.color4}}">;</span><br />
+		            &nbsp;&nbsp;&nbsp;<span class="identifier" style="color: {{themeData.color4}}">hex += </span><span class="usertype" style="color: {{themeData.color5}}">ColorTranslator</span><span class="identifier" style="color: {{themeData.color4}}">.ToWin32(c).ToString(</span><span class="string" style="color: {{themeData.color1}}">&quot;X&quot;</span><span class="identifier" style="color: {{themeData.color4}}">);</span><br />
+		            &nbsp;&nbsp;&nbsp;<span class="keyword" style="color: {{themeData.color3}}">return</span> <span class="identifier" style="color: {{themeData.color4}}">hex.Substring(hex.Length - </span><span class="number" style="color: {{themeData.color2}}">8</span><span class="identifier" style="color: {{themeData.color4}}">,</span> <span class="number" style="color: {{themeData.color2}}">8</span><span class="identifier" style="color: {{themeData.color4}}">);</span><br />
+		            <span class="identifier" style="color: {{themeData.color4}}">}</span><br />
+		            <span class="preprocessor" style="color: {{themeData.color9}}">#endregion</span><br />
+			    </div>

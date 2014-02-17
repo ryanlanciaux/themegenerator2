@@ -1,0 +1,43 @@
+<div class="row">
+	<div class="col-sm-3">
+		<!-- this should be a series of directive calls-->
+		<div class="form-group">
+			<label for="main">Main Color:</label>
+			<div class="row">
+				<div class="col-sm-1" style="background-color: {{themeData.main}}; min-height:34px;"></div>
+				<div class="col-sm-10">
+					<input name="main" colorpicker class="form-control" type="text" ng-model="themeData.main" ng-change="themeData.update()"/>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="background">Background:</label>
+			<div class="row">
+				<div class="col-sm-1" style="background-color: {{themeData.background}}; min-height:34px;"></div>
+				<div class="col-sm-10">
+					<input name="background" colorpicker class="form-control" type="text" ng-model="themeData.background" ng-change="themeData.update()" />
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="foreground">Foreground:</label>
+			<div class="row">
+				<div class="col-sm-1" style="background-color: {{themeData.foreground}}; min-height:34px;"></div>
+				<div class="col-sm-10">
+					<input name="foreground" colorpicker class="form-control" type="text" ng-model="themeData.foreground" ng-change="themeData.update()" />
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="contrast">Contrast:</label>
+			<div class="row">
+				<div class="col-md-12">
+					<div><div ui-slider class="contrast-slider" min="0" max="180" ng-model="themeData.contrast"></div></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div ng-include src="'templates/preview-csharp.html'"></div>
+	</div>
+</div>
