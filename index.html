@@ -15,6 +15,7 @@
 			background-color:#EDEDED;
 			height:2px;
 		}
+		
 		.ui-slider-handle{
 			background-color:#444;
 			margin-top:-4px;
@@ -24,6 +25,17 @@
 	<script src="scripts/theme-data.js"></script>
 	<script type="text/javascript">
 		var themeApp = angular.module('themeApp', ['ui.slider','colorpicker.module']);
+
+		themeApp.directive('colorChooser', function(){
+			return{
+				scope: {
+					color:'=',
+					label:'=',
+					update:'='
+				},
+				templateUrl: '/templates/colorChooser.html'
+			}
+		});
 
 		themeApp.controller('themeController', ['$scope', function($scope){
 			$scope.themeData = new themeData("#2FCEFE", "#CFCFCF", "#383838", 110);
