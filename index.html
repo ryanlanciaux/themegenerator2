@@ -3,6 +3,7 @@
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/jquery-ui.js"></script>	
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.min.js"></script>
 	<script src="scripts/bootstrap-colorpicker-module.js"></script>
 	<script src="scripts/slider.js"></script>
 	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
@@ -23,7 +24,7 @@
 	</style>
 	<script src="scripts/color.min.js"></script>	
 	<script type="text/javascript">
-		var themeApp = angular.module('themeApp', ['ui.slider','colorpicker.module']);
+		var themeApp = angular.module('themeApp', ['ui.slider','colorpicker.module', 'ngRoute']);
 
 		themeApp.directive('colorChooser', function(){
 			return{
@@ -35,6 +36,19 @@
 				templateUrl: '/templates/colorChooser.html'
 			}
 		});
+
+		themeApp.config(['$routeProvider', function($routeProvider){
+			$routeProvider
+				.when('/theme', {
+					templateUrl: 'templates/main.html',
+					controller: 'themeController'
+				})
+				.when('/about', {
+					templateUrl: 'templates/about.html',
+					controller: 'themeController'
+				})
+				.otherwise({ redirectTo: '/theme'});
+		}]);
 
 		themeApp.factory('ColorSettings', [function(){
 			/* Private */
@@ -95,10 +109,8 @@
 </head>
 <body>
 	<h1>Editor Theme Generator</h1>
-	<!-- this whole thing is a mess but mostly in the original -- clean it up at some point in the near future -->
-	<div ng-controller="themeController">
-		<div ng-include="'templates/main.html'"></div>	
-	</div>
+
+	<div ng-view></div>
 
 </body>
 </html>
