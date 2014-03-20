@@ -12,6 +12,28 @@ themeApp.directive('colorChooser', function(){
 	}
 });
 
+themeApp.directive('downloadItem', function(){
+	return {
+		scope: {
+			extension:'=',
+			theme:'='
+		},
+		link: function (scope, elem, attrs) {	
+			$(elem).click(function(){
+				var uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(scope.theme);
+
+				var downloadLink = document.createElement("a");
+				downloadLink.href = uri;
+				downloadLink.download = "data." + scope.extension;
+
+				document.body.appendChild(downloadLink);
+				downloadLink.click();
+				document.body.removeChild(downloadLink);
+			});
+		}
+	}
+});
+
 // Route configurations
 themeApp.config(['$routeProvider', function($routeProvider){
 	$routeProvider
@@ -72,9 +94,22 @@ themeApp.factory('ColorSettings', [function(){
 	return colorSettings; 
 }]);
 
+
+themeApp.service('ThemeService', ['ColorSettings', function(){
+	this.generateTheme = function(template, colorSettings){
+		//do something to compile the template and apply the data from the colorSettings
+
+		var compiledTemplate = '<div class="test"><p>Hi.</p></div>'; //this is obviously fake at the moment
+		return compiledTemplate; 
+	};
+}]);
+
 // Controllers
-themeApp.controller('themeController', ['$scope', 'ColorSettings', function($scope, ColorSettings){
+themeApp.controller('themeController', ['$scope', 'ColorSettings', 'ThemeService', function($scope, ColorSettings, ThemeService){
 	$scope.themeData = ColorSettings;
+
+	$scope.dataItem = ThemeService.generateTheme('','');
+	$scope.extension = "txt";
 
 	$scope.$watch('themeData.contrast', function() {
 		$scope.themeData.update();
