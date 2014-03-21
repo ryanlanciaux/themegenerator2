@@ -1,4 +1,4 @@
-var themeApp = angular.module('themeApp', ['ui.slider','colorpicker.module', 'ngRoute']);
+var themeApp = angular.module('themeApp', ['ui.slider','colorpicker.module', 'ngRoute', 'themeList']);
 
 // Directives
 themeApp.directive('colorChooser', function(){
@@ -94,21 +94,36 @@ themeApp.factory('ColorSettings', [function(){
 	return colorSettings; 
 }]);
 
-
-themeApp.service('ThemeService', ['ColorSettings', function(){
-	this.generateTheme = function(template, colorSettings){
+//probably wrap all of this up in the download directive -- although maybe this is better if we're going to display
+//this stuff as well so people on browsers that don't support download can copy paste
+themeApp.service('ThemeService', ['$http', '$q', '$compile', function($http, $q, $compile){
+	this.generateTheme = function(templatePath){
 		//do something to compile the template and apply the data from the colorSettings
+		var deferred = $q.defer();
+		$http({
+		    url: templatePath,
+		    method: "GET",
+		}).success(function(data, status, headers, config) {
+			var compiler = $compile(data);
+ 		    deferred.resolve(compiler); 
+		}).error(function(data, status, headers, config) {
+			//do something
+		});
 
-		var compiledTemplate = '<div class="test"><p>Hi.</p></div>'; //this is obviously fake at the moment
-		return compiledTemplate; 
+		return deferred.promise; 
 	};
 }]);
 
 // Controllers
-themeApp.controller('themeController', ['$scope', 'ColorSettings', 'ThemeService', function($scope, ColorSettings, ThemeService){
+themeApp.controller('themeController', ['$scope', 'ColorSettings', 'ThemeService', 'themeList', function($scope, ColorSettings, ThemeService, themeList){
 	$scope.themeData = ColorSettings;
 
-	$scope.dataItem = ThemeService.generateTheme('','');
+	var item = ThemeService.generateTheme(themeList.getTheme("Visual Studio 2008").path, $scope);
+	$scope.dataItem = item.then(function(data){
+		debugger;
+		var a = data($scope); 
+
+	});
 	$scope.extension = "txt";
 
 	$scope.$watch('themeData.contrast', function() {
