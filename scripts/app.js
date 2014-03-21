@@ -12,27 +12,42 @@ themeApp.directive('colorChooser', function(){
 	}
 });
 
-themeApp.directive('downloadItem', function(){
+themeApp.directive('downloadItem', ['$http', '$q', '$compile', function($http, $q, $compile){
 	return {
 		scope: {
 			extension:'=',
-			theme:'='
+			themePath:'=',
+			themeData:'='
 		},
+		template: '<button ng-click="initiateDownload()">Download</button>',
+		controller: function($scope, $element){
+			$scope.initiateDownload = function(){
+				$http({
+				    url: $scope.themePath,
+				    method: "GET",
+				}).success(function(data, status, headers, config) {
+					var compiler = $compile(data);
+					var outputTheme = compiler($scope);
+
+					var uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(outputTheme);
+
+					var downloadLink = document.createElement("a");
+					downloadLink.href = uri;
+					downloadLink.download = "data." + $scope.extension;
+
+					document.body.appendChild(downloadLink);
+					downloadLink.click();
+					document.body.removeChild(downloadLink);
+				}).error(function(data, status, headers, config) {
+					//do something
+				});
+
+			};
+		},	
 		link: function (scope, elem, attrs) {	
-			$(elem).click(function(){
-				var uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(scope.theme);
-
-				var downloadLink = document.createElement("a");
-				downloadLink.href = uri;
-				downloadLink.download = "data." + scope.extension;
-
-				document.body.appendChild(downloadLink);
-				downloadLink.click();
-				document.body.removeChild(downloadLink);
-			});
 		}
 	}
-});
+}]);
 
 // Route configurations
 themeApp.config(['$routeProvider', function($routeProvider){
@@ -94,37 +109,14 @@ themeApp.factory('ColorSettings', [function(){
 	return colorSettings; 
 }]);
 
-//probably wrap all of this up in the download directive -- although maybe this is better if we're going to display
-//this stuff as well so people on browsers that don't support download can copy paste
-themeApp.service('ThemeService', ['$http', '$q', '$compile', function($http, $q, $compile){
-	this.generateTheme = function(templatePath){
-		//do something to compile the template and apply the data from the colorSettings
-		var deferred = $q.defer();
-		$http({
-		    url: templatePath,
-		    method: "GET",
-		}).success(function(data, status, headers, config) {
-			var compiler = $compile(data);
- 		    deferred.resolve(compiler); 
-		}).error(function(data, status, headers, config) {
-			//do something
-		});
-
-		return deferred.promise; 
-	};
-}]);
-
 // Controllers
-themeApp.controller('themeController', ['$scope', 'ColorSettings', 'ThemeService', 'themeList', function($scope, ColorSettings, ThemeService, themeList){
+themeApp.controller('themeController', ['$scope', 'ColorSettings', 'themeList', function($scope, ColorSettings, themeList){
 	$scope.themeData = ColorSettings;
 
-	var item = ThemeService.generateTheme(themeList.getTheme("Visual Studio 2008").path, $scope);
-	$scope.dataItem = item.then(function(data){
-		debugger;
-		var a = data($scope); 
-
-	});
-	$scope.extension = "txt";
+	var theme = themeList.getTheme("Visual Studio 2008");
+	debugger;
+	$scope.themePath = theme.path;
+	$scope.extension = theme.extension;
 
 	$scope.$watch('themeData.contrast', function() {
 		$scope.themeData.update();
