@@ -15,24 +15,24 @@ themeApp.directive('colorChooser', function(){
 themeApp.directive('downloadItem', ['$http', '$q', '$interpolate', function($http, $q, $interpolate){
 	return {
 		scope: {
-			extension:'=',
-			themePath:'=',
+			themeSettings:'=',
 			themeData:'='
 		},
 		template: '<button ng-click="initiateDownload()">Download</button>',
 		controller: function($scope, $element){
 			$scope.initiateDownload = function(){
 				$http({
-				    url: $scope.themePath,
+				    url: $scope.themeSettings.path,
 				    method: "GET",
 				}).success(function(data, status, headers, config) {
+					$scope.themeData = $scope.themeSettings.format($scope.themeData);
 					var interpolated = $interpolate(data)($scope);
 
 					var uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(interpolated);
 
 					var downloadLink = document.createElement("a");
 					downloadLink.href = uri;
-					downloadLink.download = "data." + $scope.extension;
+					downloadLink.download = "data." + $scope.themeSettings.extension;
 
 					document.body.appendChild(downloadLink);
 					downloadLink.click();
@@ -42,8 +42,6 @@ themeApp.directive('downloadItem', ['$http', '$q', '$interpolate', function($htt
 				});
 
 			};
-		},	
-		link: function (scope, elem, attrs) {	
 		}
 	}
 }]);
@@ -112,9 +110,7 @@ themeApp.factory('ColorSettings', [function(){
 themeApp.controller('themeController', ['$scope', 'ColorSettings', 'themeList', function($scope, ColorSettings, themeList){
 	$scope.themeData = ColorSettings;
 
-	var theme = themeList.getTheme("Visual Studio 2008");
-	$scope.themePath = theme.path;
-	$scope.extension = theme.extension;
+	$scope.themeSettings = themeList.getTheme("Visual Studio 2008");
 
 	$scope.$watch('themeData.contrast', function() {
 		$scope.themeData.update();
