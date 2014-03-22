@@ -12,7 +12,7 @@ themeApp.directive('colorChooser', function(){
 	}
 });
 
-themeApp.directive('downloadItem', ['$http', '$q', '$compile', function($http, $q, $compile){
+themeApp.directive('downloadItem', ['$http', '$q', '$interpolate', function($http, $q, $interpolate){
 	return {
 		scope: {
 			extension:'=',
@@ -26,10 +26,9 @@ themeApp.directive('downloadItem', ['$http', '$q', '$compile', function($http, $
 				    url: $scope.themePath,
 				    method: "GET",
 				}).success(function(data, status, headers, config) {
-					var compiler = $compile(data);
-					var outputTheme = compiler($scope);
+					var interpolated = $interpolate(data)($scope);
 
-					var uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(outputTheme);
+					var uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(interpolated);
 
 					var downloadLink = document.createElement("a");
 					downloadLink.href = uri;
@@ -114,7 +113,6 @@ themeApp.controller('themeController', ['$scope', 'ColorSettings', 'themeList', 
 	$scope.themeData = ColorSettings;
 
 	var theme = themeList.getTheme("Visual Studio 2008");
-	debugger;
 	$scope.themePath = theme.path;
 	$scope.extension = theme.extension;
 
