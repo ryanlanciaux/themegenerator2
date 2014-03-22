@@ -25,7 +25,7 @@ themeApp.directive('downloadItem', ['$http', '$q', '$interpolate', function($htt
 				    url: $scope.themeSettings.path,
 				    method: "GET",
 				}).success(function(data, status, headers, config) {
-					$scope.themeData = $scope.themeSettings.format($scope.themeData);
+					$scope.themeData = ($scope.themeSettings.format && $scope.themeSettings.format($scope.themeData)) || $scope.themeData;
 					var interpolated = $interpolate(data)($scope);
 
 					var uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(interpolated);
