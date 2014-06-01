@@ -9,9 +9,8 @@ themeApp.directive('colorChooser', function(){
 			update:'='
 		},
 		templateUrl: '/templates/colorChooser.html'
-	}
+	};
 });
-
 themeApp.directive('downloadItem', ['$http', '$q', '$interpolate', function($http, $q, $interpolate){
 	return {
 		scope: {
@@ -22,8 +21,8 @@ themeApp.directive('downloadItem', ['$http', '$q', '$interpolate', function($htt
 		controller: function($scope, $element){
 			$scope.initiateDownload = function(){
 				$http({
-				    url: $scope.themeSettings.path,
-				    method: "GET",
+						url: $scope.themeSettings.path,
+						method: "GET",
 				}).success(function(data, status, headers, config) {
 					$scope.themeData = ($scope.themeSettings.format && $scope.themeSettings.format($scope.themeData)) || $scope.themeData;
 					var interpolated = $interpolate(data)($scope);
@@ -43,7 +42,7 @@ themeApp.directive('downloadItem', ['$http', '$q', '$interpolate', function($htt
 
 			};
 		}
-	}
+	};
 }]);
 
 // Route configurations
@@ -86,28 +85,22 @@ themeApp.factory('ColorSettings', [function(){
 			that.color3 = that.main; //randomly this one is the same color as the main color in the original code.
 			that.color4 = that.foreground; 
 			that.color5 = Color(that.main).rotate(that.contrast/(-1 * shadeMultiplyer)).hexString(); 
-			that.color6 = Color(that.color5).lighten(.20 * shadeMultiplyer).hexString();
+			that.color6 = Color(that.color5).lighten(0.20 * shadeMultiplyer).hexString();
 			that.color7 = that.foreground; 
 			that.color8 = that.background; 
 			that.color9 = Color(that.main).rotate(that.contrast / preprocessorMultiplyer).hexString(); 
 
 			that.comment = Color(that.foreground).rotate(shadeMultiplyer * 30).hexString(); 
-			that.error =  Color("#F00").lighten(.40);
-
-			lastMain = colorSettings.main;
-			lastForeground = colorSettings.foreground;
-			lastBackground = colorSettings.background;
-			lastContrast = colorSettings.contrast;
-
+			that.error =  Color("#F00").lighten(0.40);
 		}
-	}
+	};
 
 	//this is messy - initializing
 	colorSettings.main = "#2FCEFE"; 
 	colorSettings.foreground = "#CFCFCF";
 	colorSettings.background = "#383838";
 	colorSettings.contrast = 110;
-	colorSettings.update(true); 
+	colorSettings.update(); 
 
 	return colorSettings; 
 }]);
