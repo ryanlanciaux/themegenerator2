@@ -1,4 +1,4 @@
-var themeApp = angular.module('themeApp', ['ui.slider','colorpicker.module', 'ngRoute', 'themeList']);
+var themeApp = angular.module('themeApp', ['ui.slider','angularSpectrumColorpicker', 'ngRoute', 'themeList']);
 
 // Directives
 themeApp.directive('colorChooser', function(){
@@ -67,14 +67,42 @@ themeApp.factory('ColorSettings', [function(){
 	var numberMultiplyer = -1.25;
 	var preprocessorMultiplyer = 1.5;
 
+
+	var lastMain = null;
+	var lastForeground = null;
+	var lastBackground = null;
+	var lastContrast = null;
+
 	//maybe make a function instead
 	var colorSettings = {
 		main: null,
 		foreground: null,
 		background: null,
 		contrast: null,
-		update: function(){
+		update: function(dontCheck){
 			that = this; 
+
+			if (lastMain === null) {
+				lastMain = colorSettings.main;
+			}
+			if (lastForeground === null) {
+				lastForeground = colorSettings.foreground;
+			}
+			if (lastBackground === null) {
+				lastBackground = colorSettings.background;
+			}
+			if (lastContrast === null) {
+				lastContrast = colorSettings.contrast;
+			}
+
+			if (dontCheck === undefined &&
+					lastMain === colorSettings.main &&
+					lastForeground === colorSettings.foreground &&
+					lastBackground === colorSettings.background &&
+					lastContrast === colorSettings.contrast)
+			{
+				return;
+			}
 
 			//figure out if this is a dark or light background and set shade multiplyer
 			//this multiplyer will be used against the colors to determine if you should rotate in a postive or negative direction
@@ -92,7 +120,13 @@ themeApp.factory('ColorSettings', [function(){
 			that.color9 = Color(that.main).rotate(that.contrast / preprocessorMultiplyer).hexString(); 
 
 			that.comment = Color(that.foreground).rotate(shadeMultiplyer * 30).hexString(); 
-			that.error =  Color("#F00").lighten(.40); 
+			that.error =  Color("#F00").lighten(.40);
+
+			lastMain = colorSettings.main;
+			lastForeground = colorSettings.foreground;
+			lastBackground = colorSettings.background;
+			lastContrast = colorSettings.contrast;
+
 		}
 	}
 
@@ -101,7 +135,7 @@ themeApp.factory('ColorSettings', [function(){
 	colorSettings.foreground = "#CFCFCF";
 	colorSettings.background = "#383838";
 	colorSettings.contrast = 110;
-	colorSettings.update(); 
+	colorSettings.update(true); 
 
 	return colorSettings; 
 }]);
