@@ -67,42 +67,14 @@ themeApp.factory('ColorSettings', [function(){
 	var numberMultiplyer = -1.25;
 	var preprocessorMultiplyer = 1.5;
 
-
-	var lastMain = null;
-	var lastForeground = null;
-	var lastBackground = null;
-	var lastContrast = null;
-
 	//maybe make a function instead
 	var colorSettings = {
 		main: null,
 		foreground: null,
 		background: null,
 		contrast: null,
-		update: function(dontCheck){
+		update: function(){
 			that = this; 
-
-			if (lastMain === null) {
-				lastMain = colorSettings.main;
-			}
-			if (lastForeground === null) {
-				lastForeground = colorSettings.foreground;
-			}
-			if (lastBackground === null) {
-				lastBackground = colorSettings.background;
-			}
-			if (lastContrast === null) {
-				lastContrast = colorSettings.contrast;
-			}
-
-			if (dontCheck === undefined &&
-					lastMain === colorSettings.main &&
-					lastForeground === colorSettings.foreground &&
-					lastBackground === colorSettings.background &&
-					lastContrast === colorSettings.contrast)
-			{
-				return;
-			}
 
 			//figure out if this is a dark or light background and set shade multiplyer
 			//this multiplyer will be used against the colors to determine if you should rotate in a postive or negative direction
