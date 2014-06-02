@@ -1,9 +1,9 @@
 <div class="row">
-	<div class="col-sm-3">
+	<div class="col-sm-3" id="selector">
 		<!-- this should be a series of directive calls-->
-		<div color-chooser color="themeData.main" label="'Main Color'" update="themeData.update()"></div>
-		<div color-chooser color="themeData.background" label="'Background Color'" update="themeData.update()"></div>
-		<div color-chooser color="themeData.foreground" label="'Foreground Color'" update="themeData.update()"></div>
+		<div color-chooser color="themeData.main" label="'Main Color'"></div>
+		<div color-chooser color="themeData.background" label="'Background Color'"></div>
+		<div color-chooser color="themeData.foreground" label="'Foreground Color'"></div>
 
 		<!-- maybe not needed as directive because not going to be reused -->
 		<div class="form-group">
@@ -14,6 +14,25 @@
 				</div>
 			</div>
 		</div>
+		<button ng-click="toggleAdvanced()" ng-hide="showAdvanced">Show Advanced</button>
+		<button href="#" ng-click="toggleAdvanced()" ng-show="showAdvanced">Hide Advanced</button>	
+		<div ng-show="showAdvanced">
+			<p>
+				Please note: changing any of the above values will wipe out any changes you make here.
+			</p>
+			<div color-chooser color="themeData.color1" label="'Color 1'"></div>
+			<div color-chooser color="themeData.color2" label="'Color 2'"></div>
+			<div color-chooser color="themeData.color3" label="'Color 3'"></div>
+			<div color-chooser color="themeData.color4" label="'Color 4'"></div>
+			<div color-chooser color="themeData.color5" label="'Color 5'"></div>
+			<div color-chooser color="themeData.color6" label="'Color 6'"></div>
+			<div color-chooser color="themeData.color7" label="'Color 7'"></div>
+			<div color-chooser color="themeData.color8" label="'Color 8'"></div>
+			<div color-chooser color="themeData.color9" label="'Color 9'"></div>
+			<div color-chooser color="themeData.comment" label="'Comment'"></div>
+		</div>
+
+
 	</div>
 	<div class="col-sm-6">
 		<div ng-include src="'templates/preview-csharp.html'"></div>

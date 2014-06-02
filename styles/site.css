@@ -1,0 +1,15 @@
+body{ padding:20px; }
+
+#selector{
+	margin-bottom: 20px;
+}
+
+.ui-slider{
+	background-color:#EDEDED;
+	height:2px;
+}
+
+.ui-slider-handle{
+	background-color:#444;
+	margin-top:-4px;
+}

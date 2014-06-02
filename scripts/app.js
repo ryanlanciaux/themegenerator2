@@ -5,8 +5,7 @@ themeApp.directive('colorChooser', function(){
 	return{
 		scope: {
 			color:'=',
-			label:'=',
-			update:'='
+			label:'='
 		},
 		templateUrl: '/templates/colorChooser.html'
 	};
@@ -74,7 +73,6 @@ themeApp.factory('ColorSettings', [function(){
 		contrast: null,
 		update: function(){
 			that = this; 
-
 			//figure out if this is a dark or light background and set shade multiplyer
 			//this multiplyer will be used against the colors to determine if you should rotate in a postive or negative direction
 			var shadeMultiplyer =  Color(that.background).light() ? 1 : -1; 
@@ -108,10 +106,28 @@ themeApp.factory('ColorSettings', [function(){
 // Controllers
 themeApp.controller('themeController', ['$scope', 'ColorSettings', 'themeList', function($scope, ColorSettings, themeList){
 	$scope.themeData = ColorSettings;
+	$scope.showAdvanced = false; 
 
+	$scope.toggleAdvanced = function(){
+		$scope.showAdvanced = $scope.showAdvanced == true ? false : true;
+	}
 	$scope.themeSettings = themeList.getTheme("Visual Studio 2008");
+
+	//i want watchGroup now! ha
+	$scope.$watch('themeData.main', function() {
+		$scope.themeData.update();
+	});
+
+	$scope.$watch('themeData.background', function() {
+		$scope.themeData.update();
+	});
+
+	$scope.$watch('themeData.foreground', function() {
+		$scope.themeData.update();
+	});
 
 	$scope.$watch('themeData.contrast', function() {
 		$scope.themeData.update();
 	});
+
 }]);
