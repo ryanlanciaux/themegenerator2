@@ -1,5 +1,7 @@
 <html ng-app="themeApp">
 <head>
+	
+	<link rel="stylesheet" href="styles/spectrum.css" />
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/jquery-ui.js"></script>	
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
@@ -7,18 +9,34 @@
 	<script src="scripts/spectrum.js"></script>
 	<script src="scripts/angular-spectrum-colorpicker.js"></script>
 	<script src="scripts/slider.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>	
 	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="styles/jqueryui.slider.css" />
-	<link rel="stylesheet" href="styles/spectrum.css" />
 	<link rel="stylesheet" href="styles/site.css" />
 	<script src="scripts/color.min.js"></script>	
 	<script src="scripts/theme-list.js"></script>
 	<script src="scripts/app.js"></script>
 </head>
 <body>
-	<h1>Editor Theme Generator</h1>
 
-	<div ng-view></div>
+	<header class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<h1>themegenerator<span class="domain">.io</span></h1>
+			<nav>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Browse</a></li>
+					<li><a href="#">New Theme</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<div class="container-fluid">
+		<section id="content">
+			<div ng-view></div>
+		</section>
+	</div>
 
 </body>
 </html>

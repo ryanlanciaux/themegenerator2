@@ -1,41 +1,57 @@
 <div class="row">
-	<div class="col-sm-3" id="selector">
-		<!-- this should be a series of directive calls-->
-		<div color-chooser color="themeData.main" label="'Main Color'"></div>
-		<div color-chooser color="themeData.background" label="'Background Color'"></div>
-		<div color-chooser color="themeData.foreground" label="'Foreground Color'"></div>
-
-		<!-- maybe not needed as directive because not going to be reused -->
-		<div class="form-group">
-			<label for="contrast">Contrast:</label>
-			<div class="row">
-				<div class="col-md-12">
-					<div><div ui-slider class="contrast-slider" min="0" max="180" ng-model="themeData.contrast"></div></div>
-				</div>
+	<div class="col-sm-3 col-sm-offset-1" id="settings">
+		<div class="row section-title" id="settings-title">
+			<div class="col-sm-12">
+				<h3>Settings</h3>
 			</div>
 		</div>
-		<button ng-click="toggleAdvanced()" ng-hide="showAdvanced">Show Advanced</button>
-		<button href="#" ng-click="toggleAdvanced()" ng-show="showAdvanced">Hide Advanced</button>	
-		<div ng-show="showAdvanced">
-			<p>
-				Please note: changing any of the above values will wipe out any changes you make here.
-			</p>
-			<div color-chooser color="themeData.color1" label="'Color 1'"></div>
-			<div color-chooser color="themeData.color2" label="'Color 2'"></div>
-			<div color-chooser color="themeData.color3" label="'Color 3'"></div>
-			<div color-chooser color="themeData.color4" label="'Color 4'"></div>
-			<div color-chooser color="themeData.color5" label="'Color 5'"></div>
-			<div color-chooser color="themeData.color6" label="'Color 6'"></div>
-			<div color-chooser color="themeData.color7" label="'Color 7'"></div>
-			<div color-chooser color="themeData.color8" label="'Color 8'"></div>
-			<div color-chooser color="themeData.color9" label="'Color 9'"></div>
-			<div color-chooser color="themeData.comment" label="'Comment'"></div>
+		<div id="settings-body" class="section-body">
+			<!-- this should be a series of directive calls-->
+			<div color-chooser color="themeData.main" label="'Main Color'"></div>
+			<div color-chooser color="themeData.background" label="'Background Color'"></div>
+			<div color-chooser color="themeData.foreground" label="'Foreground Color'"></div>
+
+			<!-- maybe not needed as directive because not going to be reused -->
+			<div class="form-group">
+				<div class="col-xs-6">
+					<label for="contrast">Contrast:</label>
+				</div>
+				<div class="row">
+					<div class="col-xs-10 col-xs-offset-1">
+						<div><div ui-slider class="contrast-slider" min="0" max="180" ng-model="themeData.contrast"></div></div>
+					</div>
+				</div>
+			</div>
+			<div class="center">
+				<button class="btn" ng-click="toggleAdvanced()" ng-hide="showAdvanced">Show Advanced</button>
+				<button class="btn" href="#" ng-click="toggleAdvanced()" ng-show="showAdvanced">Hide Advanced</button>	
+			</div>
+			<div ng-show="showAdvanced">
+				<small>
+					Please note: changing any of the above values will wipe out any changes you make here.
+				</small>
+				<div color-chooser color="themeData.color1" label="'Color 1'"></div>
+				<div color-chooser color="themeData.color2" label="'Color 2'"></div>
+				<div color-chooser color="themeData.color3" label="'Color 3'"></div>
+				<div color-chooser color="themeData.color4" label="'Color 4'"></div>
+				<div color-chooser color="themeData.color5" label="'Color 5'"></div>
+				<div color-chooser color="themeData.color6" label="'Color 6'"></div>
+				<div color-chooser color="themeData.color7" label="'Color 7'"></div>
+				<div color-chooser color="themeData.color8" label="'Color 8'"></div>
+				<div color-chooser color="themeData.color9" label="'Color 9'"></div>
+				<div color-chooser color="themeData.comment" label="'Comment'"></div>
+			</div>
 		</div>
-
-
 	</div>
-	<div class="col-sm-6">
-		<div ng-include src="'templates/preview-csharp.html'"></div>
+	<div class="col-sm-6 col-sm-offset-1" id="preview">
+		<div id="preview-title" class="section-title">
+			<div class="col-sm-12">
+				<h3>Preview</h3>
+			</div>
+		</div>
+		<div class="section-body">
+			<div ng-include src="'templates/preview-csharp.html'"></div>
+		</div>
 	</div>
 </div>
 <div download-item theme-settings="themeSettings" theme-data="themeData"></div>

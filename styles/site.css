@@ -1,15 +1,104 @@
-body{ padding:20px; }
-
-#selector{
-	margin-bottom: 20px;
+body{ background-color: #F5F9FA;  }
+h1, h2, h3, h4, h5 { font-family: 'Open Sans Condensed', sans-serif;}
+label { font-size: 16px; font-weight: 400; letter-spacing: .5px}
+header{
+	text-align: center;
+	background-color: #EDEDED;
+	margin-bottom: 30px;
+	border-bottom: 4px solid #CCC;
 }
 
+	header h1 { 
+
+		float: left;
+		padding-left: 30px;
+		padding-bottom: 15px;
+	}
+	
+	header .domain{
+		color: #ccc;
+	}
+
+nav{
+	text-align: right;
+	padding-top: 15px;
+}
+
+	nav ul{
+		padding:20px;
+	}
+
+	nav ul li{
+		list-style-type: none;
+		display: inline;
+		vertical-align: middle;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	nav a{ color: #555;}
+	nav a:hover{ color: #535353;}
+
+#settings{
+	margin-bottom: 20px;
+	padding:0px;
+	border: 2px solid #CCC;
+}
+
+	#settings-title{
+		background-color: #1BA39C;
+	}
+
+	#settings-title h3{
+		margin:10px;
+	}
+
+	#settings-body{
+
+	}
+
+	#settings-body .color-row{
+		margin-bottom: 10px;
+	}
+
+	#settings small { 
+		display:block;
+		padding: 10px;
+		color: #777;
+	}
+
+	#preview-title{
+		background-color: #F27935 !important;
+	}
 .ui-slider{
 	background-color:#EDEDED;
 	height:2px;
 }
 
 .ui-slider-handle{
-	background-color:#444;
+	background-color:#95A5A6;
 	margin-top:-4px;
+}
+
+/* 
+	General Styles
+*/
+
+.center{ 
+	width: 100%;
+	text-align: center;
+	margin-top: 30px; 
+}
+
+.section-title{
+	color: #ECF0F1;
+	font-size: 16px; 
+	text-transform: lowercase;
+	letter-spacing: 1.5px;
+	margin: -2px;
+	margin-bottom: 10px;
+}
+
+.section-body{
+	padding:10px;	
 }
