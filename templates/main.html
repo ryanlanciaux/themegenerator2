@@ -1,9 +1,7 @@
 <div class="row">
-	<div class="col-sm-3 col-sm-offset-1" id="settings">
+	<div class="col-sm-3 col-sm-offset-1 section-container" id="settings">
 		<div class="row section-title" id="settings-title">
-			<div class="col-sm-12">
 				<h3>Settings</h3>
-			</div>
 		</div>
 		<div id="settings-body" class="section-body">
 			<!-- this should be a series of directive calls-->
@@ -43,15 +41,14 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-6 col-sm-offset-1" id="preview">
-		<div id="preview-title" class="section-title">
-			<div class="col-sm-12">
+	<div class="col-sm-6 col-sm-offset-1 section-container" id="preview">
+		<div id="preview-title" class="row section-title">
 				<h3>Preview</h3>
-			</div>
+				<div id="download-button" download-item theme-settings="themeSettings" theme-data="themeData"></div>
 		</div>
 		<div class="section-body">
 			<div ng-include src="'templates/preview-csharp.html'"></div>
 		</div>
 	</div>
 </div>
-<div download-item theme-settings="themeSettings" theme-data="themeData"></div>
+

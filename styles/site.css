@@ -40,21 +40,11 @@ nav{
 	nav a:hover{ color: #535353;}
 
 #settings{
-	margin-bottom: 20px;
-	padding:0px;
-	border: 2px solid #CCC;
+
 }
 
 	#settings-title{
 		background-color: #1BA39C;
-	}
-
-	#settings-title h3{
-		margin:10px;
-	}
-
-	#settings-body{
-
 	}
 
 	#settings-body .color-row{
@@ -69,7 +59,20 @@ nav{
 
 	#preview-title{
 		background-color: #F27935 !important;
+		margin-bottom: 0px;
+		position: relative;
 	}
+
+	#preview-title #download-button{
+		position: absolute;
+		right: 12px;
+		top: 6px;
+	}
+
+	#preview-title #download-button button{
+		background-color: #ED9C6E
+	}
+
 .ui-slider{
 	background-color:#EDEDED;
 	height:2px;
@@ -90,6 +93,12 @@ nav{
 	margin-top: 30px; 
 }
 
+.section-container{
+	margin-bottom: 20px;
+	padding:0px;
+	border: 2px solid #CCC;
+}
+
 .section-title{
 	color: #ECF0F1;
 	font-size: 16px; 
@@ -97,7 +106,12 @@ nav{
 	letter-spacing: 1.5px;
 	margin: -2px;
 	margin-bottom: 10px;
+	height: auto;
 }
+
+	.section-title h3{
+		margin:10px;
+	}
 
 .section-body{
 	padding:10px;	
