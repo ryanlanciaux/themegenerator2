@@ -25,7 +25,7 @@ themeApp.directive('downloadItem', ['$http', '$q', '$interpolate', function($htt
 				}).success(function(data, status, headers, config) {
 					$scope.themeData = ($scope.themeSettings.format && $scope.themeSettings.format($scope.themeData)) || $scope.themeData;
 					var interpolated = $interpolate(data)($scope);
-					
+
 					var blob = new Blob([interpolated], {type: 'application/octet-stream'})	
 					saveAs(blob, "themeGenerator" + $scope.themeSettings.extension);
 
@@ -66,7 +66,7 @@ themeApp.factory('ColorSettings', [function(){
 		background: null,
 		contrast: null,
 		update: function(){
-			that = this; 
+			var that = this; 
 			//figure out if this is a dark or light background and set shade multiplyer
 			//this multiplyer will be used against the colors to determine if you should rotate in a postive or negative direction
 			var shadeMultiplyer =  Color(that.background).light() ? 1 : -1; 
@@ -84,16 +84,19 @@ themeApp.factory('ColorSettings', [function(){
 
 			that.comment = Color(that.foreground).rotate(shadeMultiplyer * 30).hexString(); 
 			that.error =  Color("#F00").lighten(0.40);
+		},
+		initialize: function(){
+			var that = this; 
+
+			that.main = "#2FCEFE"; 
+			that.foreground = "#CFCFCF";
+			that.background = "#383838";
+			that.contrast = 110;
+			that.update(); 
 		}
 	};
 
-	//this is messy - initializing
-	colorSettings.main = "#2FCEFE"; 
-	colorSettings.foreground = "#CFCFCF";
-	colorSettings.background = "#383838";
-	colorSettings.contrast = 110;
-	colorSettings.update(); 
-
+	colorSettings.initialize(); 
 	return colorSettings; 
 }]);
 
@@ -124,4 +127,10 @@ themeApp.controller('themeController', ['$scope', 'ColorSettings', 'themeList', 
 		$scope.themeData.update();
 	});
 
+}]);
+
+themeApp.controller('pageController', ['$scope', 'ColorSettings', function($scope, ColorSettings){
+	$scope.resetColors = function(){
+		ColorSettings.initialize();
+	};
 }]);

@@ -23,12 +23,12 @@
 	<header class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<h1>themegenerator<span class="domain">.io</span></h1>
-			<nav>
+			<nav ng-controller="pageController">>
 				<ul>
-					<li><a href="#">Home</a></li>
-					<li><a href="#">About</a></li>
+					<li><a href="#/theme">Home</a></li>
+					<li><a href="#/about">About</a></li>
 					<li><a href="#">Browse</a></li>
-					<li><a href="#">New Theme</a></li>
+					<li><a href="#" ng-click="resetColors()">New Theme</a></li>
 				</ul>
 			</nav>
 		</div>
