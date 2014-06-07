@@ -25,16 +25,10 @@ themeApp.directive('downloadItem', ['$http', '$q', '$interpolate', function($htt
 				}).success(function(data, status, headers, config) {
 					$scope.themeData = ($scope.themeSettings.format && $scope.themeSettings.format($scope.themeData)) || $scope.themeData;
 					var interpolated = $interpolate(data)($scope);
+					
+					var blob = new Blob([interpolated], {type: 'application/octet-stream'})	
+					saveAs(blob, "themeGenerator" + $scope.themeSettings.extension);
 
-					var uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(interpolated);
-
-					var downloadLink = document.createElement("a");
-					downloadLink.href = uri;
-					downloadLink.download = "data." + $scope.themeSettings.extension;
-
-					document.body.appendChild(downloadLink);
-					downloadLink.click();
-					document.body.removeChild(downloadLink);
 				}).error(function(data, status, headers, config) {
 					//do something
 				});
