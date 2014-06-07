@@ -14,7 +14,7 @@ themeApp.directive('downloadItem', ['$http', '$q', '$interpolate', function($htt
 	return {
 		scope: {
 			themeSettings:'=',
-			themeData:'='
+			themeData:'&'
 		},
 		template: '<button ng-click="initiateDownload()" class="btn">Download</button>',
 		controller: function($scope, $element){
