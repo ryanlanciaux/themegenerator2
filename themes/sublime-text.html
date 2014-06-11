@@ -11,33 +11,33 @@
 			<key>settings</key>
 			<dict>
 				<key>background</key>
-				<string>{{themeData.Background}}</string>
-				<key>caret</key>
+				<string>{{themeData.background}}</string>
+				<key>caret</key> <!-- this is caret + underline under xml elements when selected  -->
 				<string>#F8F8F0</string>
 				<key>foreground</key>
-				<string>#F8F8F2</string>
+				<string>{{themeData.foreground}}</string> <!-- variables, etc. -->
 				<key>invisibles</key>
-				<string>#3B3A32</string>
+				<string>#3B3A32</string> <!-- TODO: Uncertain -->
 				<key>lineHighlight</key>
-				<string>#202325</string>
+				<string>#202325</string> <!-- TODO: Background color for the line number  -->
 				<key>selection</key>
-				<string>#49483E</string>
+				<string>#49483E</string> <!-- TODO: Selected text -->
 				<key>findHighlight</key>
-				<string>#FFE792</string>
+				<string>#FFE792</string> <!-- TODO: Found text background-->
 				<key>findHighlightForeground</key>
-				<string>#000000</string>
+				<string>#000000</string> <!-- TODO: Found text foreground -->
 				<key>selectionBorder</key>
-				<string>#222218</string>
+				<string>#222218</string> <!-- TODO: Selected text border -->
 				<key>activeGuide</key>
-				<string>#9D550FB0</string>
+				<string>#9D550FB0</string> <!-- TODO: Uncertain -->
 
 				<key>bracketsForeground</key>
-				<string>#F8F8F2A5</string>
+				<string>#F8F8F2A5</string> <!-- TODO: Underline for within parens, brackets -->
 				<key>bracketsOptions</key>
 				<string>underline</string>
 
 				<key>bracketContentsForeground</key>
-				<string>#F8F8F2A5</string>
+				<string>#F8F8F2A5</string> 112233
 				<key>bracketContentsOptions</key>
 				<string>underline</string>
 
@@ -53,7 +53,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#75715E</string>
+				<string>{{themeData.comment}}</string> <!-- Comment, of course. -->
 			</dict>
 		</dict>
 		<dict>
@@ -64,7 +64,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#E6DB74</string>
+				<string>{{themeData.color1}}</string> <!-- Strings -->
 			</dict>
 		</dict>
 		<dict>
@@ -75,7 +75,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#AE81FF</string>
+				<string>{{themeData.color2}}</string> <!-- Numbers -->
 			</dict>
 		</dict>
 
