@@ -108,7 +108,7 @@ themeApp.controller('themeController', ['$scope', 'ColorSettings', 'themeList', 
 	$scope.toggleAdvanced = function(){
 		$scope.showAdvanced = $scope.showAdvanced == true ? false : true;
 	}
-	$scope.themeSettings = themeList.getTheme("Visual Studio 2008");
+	$scope.themeSettings = themeList.getTheme("Visual Studio 2013");
 
 	//i want watchGroup now! ha
 	$scope.$watch('themeData.main', function() {
