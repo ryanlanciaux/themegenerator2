@@ -23,7 +23,7 @@ themeApp.directive('downloadItem', ['$http', '$q', '$interpolate', function($htt
 						url: $scope.themeSettings.path,
 						method: "GET",
 				}).success(function(data, status, headers, config) {
-					$scope.themeData = ($scope.themeSettings.format && $scope.themeSettings.format($scope.themeData)) || $scope.themeData;
+					$scope.outputData = ($scope.themeSettings.format && $scope.themeSettings.format($scope.themeData)) || $scope.themeData;
 					var interpolated = $interpolate(data)($scope);
 
 					var blob = new Blob([interpolated], {type: 'application/octet-stream'})	
